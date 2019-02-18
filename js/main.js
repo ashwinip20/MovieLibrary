@@ -13,17 +13,24 @@ function FetchMovies(SearchedText) {
             console.log(response.data.results[0]);
             let movies = response.data.results;
             let result = "";
+            let count = 0;
             $.each(movies, (i, movie) => {
-                result += `
+                if(count<10)
+                {
+                    console.log('In FetchMovies',movies[i],movies[i].poster_path);
+                     result += `
         <div class="firstdiv">
           <div class="well text-center">
             <img src="https://image.tmdb.org/t/p/w500${movies[i].poster_path}" class="thumbnail">
             <a class="" onclick="movieSelected(${movies[i].id})" href="#">
             <h5 class='styleIt'>${movies[i].title}</h5></a><h3>
-            ${movie.release_date.substr(0,4)}</h3>
+            <span class='ReleaseYearStyle'>${movie.release_date.substr(0,4)}</span>
           </div>
         </div>
       `;
+                }
+                count++;
+               
             });
             $("#movies").html(result);
         })
@@ -86,7 +93,10 @@ function FetchAllMovies() {
             console.log(response.data.results[0]);
             let movies = response.data.results;
             let result = "";
+            let count = 0;
             $.each(movies, (i, movie) => {
+                if(count<10)
+                {
                 result += `
         <div class="firstdiv">
           <div class="well text-center">
@@ -96,7 +106,8 @@ function FetchAllMovies() {
             <span class='ReleaseYearStyle'>${movie.release_date.substr(0,4)}</span>
           </div>
         </div>
-      `;
+      `;}
+            count++;
             });
             $("#movies").html(result);
         })
@@ -104,10 +115,4 @@ function FetchAllMovies() {
             console.log(error);
         });
 }
-
-function OpenDilog() {
-
-
-}
-
 FetchAllMovies();
